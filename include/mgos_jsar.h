@@ -65,7 +65,7 @@ void mgos_jsar_expanderWriteLed(uint8_t is_en);
 
 void mgos_jsar_timMode(uint8_t tim, uint8_t prescaler, uint16_t pulse);
 
-int mgos_jsar_updateFirmware(uint8_t is_en);
+int mgos_jsar_updateFirmware(void);
 void mgos_jsar_lockExpander(uint8_t packet_n);
 uint8_t mgos_jsar_unlockExpander(void);
 

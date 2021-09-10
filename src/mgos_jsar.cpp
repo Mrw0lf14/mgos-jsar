@@ -230,7 +230,7 @@ void mgos_jsar_timMode(uint8_t tim, uint8_t prescaler, uint16_t pulse)
 }
 
 /* Update Firmware */
-int mgos_jsar_updateFirmware()
+int mgos_jsar_updateFirmware(void)
 {
     return jsar.updateFirmware();
 }
