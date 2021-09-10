@@ -77,8 +77,8 @@ let JsArKeys = {
     maxPowerWrite: ffi('void mgos_jsar_KeysMaxPowerWrite(int)'),
 
     digitalWrite: ffi('void mgos_jsar_KeysDigitalWrite(int, int)'),
-    powerWrite: ffi('void mgos_jsar_KeysPowerWrite(int, int))'),
-    speedWrite: ffi('void mgos_jsar_KeysSpeedWrite(int, int))'),
+    powerWrite: ffi('void mgos_jsar_KeysPowerWrite(int, int)'),
+    speedWrite: ffi('void mgos_jsar_KeysSpeedWrite(int, int)'),
     
     powerRead: function() {
         return ffi('int mgos_jsar_KeysPowerRead(int)');
