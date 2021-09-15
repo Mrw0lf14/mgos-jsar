@@ -66,7 +66,7 @@ let JsAr = {
     unlockExpander: function () {
         return ffi('int mgos_jsar_unlockExpander(void)'); }
 
-}
+};
 
 
 let JsArKeys = {
@@ -95,7 +95,7 @@ let JsArKeys = {
     speedWriteAll: ffi('void mgos_jsar_KeysSpeedWriteAll(int, int, int, int)'),
     positionReadAll: ffi('void mgos_jsar_KeysPositionReadAll(void *, void *, void *, void *)'),
     speedReadAll: ffi('void mgos_jsar_KeysSpeedReadAll(void *, void *, void *, void *)')
-}
+};
 
 let JsArMotors = {
     begin: ffi('void mgos_jsar_MotorsBegin(void)'),
@@ -127,4 +127,4 @@ let JsArMotors = {
     powerReadAll: ffi('void mgos_jsar_MotorsPowerReadAll(void *, void *)'),
     readAll: ffi('void mgos_jsar_MotorsReadAll(void *, void *, void *, void *)')
 
-}
+};
