@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 
+bool mgos_ethernet_init(void);
 
 int mgos_jsar_begin(void);
 

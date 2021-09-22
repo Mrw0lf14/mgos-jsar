@@ -110,10 +110,10 @@ int JsAr::begin(bool isEnableAllPins)
 	id = CONTROLLER_ID;
 
  	if(unlockBootloader() != DYN_STATUS_OK) {
-		LOG(LL_INFO, ("JSAR: unlockBootloader FASLE!")); 
+		LOG(LL_DEBUG, ("JSAR: unlockBootloader FASLE!")); 
 		return 1;
 	}
-	LOG(LL_INFO, ("JSAR: unlock %d - Ok!", id)); 
+	LOG(LL_DEBUG, ("JSAR: unlock %d - Ok!", id)); 
 
 	uint16_t timeout = 500; 
 	do {
@@ -121,10 +121,10 @@ int JsAr::begin(bool isEnableAllPins)
 	} while(jsi.ping(BOOT_ID) != DYN_STATUS_OK && --timeout);
 
 	if(timeout == 0) { 
-		LOG(LL_INFO, ("BOOT_ID ping FASLE!")); 
+		LOG(LL_DEBUG, ("BOOT_ID ping FASLE!")); 
 		return DYN_STATUS_TIMEOUT;
 	}
-	LOG(LL_INFO, ("JSAR: ping %d - Ok!", id)); 
+	LOG(LL_DEBUG, ("JSAR: ping %d - Ok!", id)); 
 
 
 	delay(100);
@@ -134,7 +134,7 @@ int JsAr::begin(bool isEnableAllPins)
 		delay(300);
 	} while(jsi.ping(id) != DYN_STATUS_OK);
 
-	LOG(LL_INFO, ("JSAR: started - Ok!"));
+	LOG(LL_DEBUG, ("JSAR: started - Ok!"));
 
 	delay(500);
 
@@ -150,15 +150,15 @@ int JsAr::begin(bool isEnableAllPins)
 		jsi.get8(i, &dummy);
 	}
 
-	LOG(LL_INFO, ("JSAR: dummy - Ok!"));
+	LOG(LL_DEBUG, ("JSAR: dummy - Ok!"));
 
 	jsi.set8(ETHERNET_ENABLE, (uint8_t)1);
 	jsi.set8(ETHERNET_RST, (uint8_t)1);
 
-	LOG(LL_INFO, ("JSAR: ETHERNET_RST - Ok!"));
+	LOG(LL_DEBUG, ("JSAR: ETHERNET_RST - Ok!"));
 
 	jsi.set8(GPIO_PULL_UP_ENABLE, 1);
-	LOG(LL_INFO, ("JSAR: PULL UP - Ok!"));
+	LOG(LL_DEBUG, ("JSAR: PULL UP - Ok!"));
 
 
 	if(isEnableAllPins) {
@@ -173,7 +173,7 @@ int JsAr::begin(bool isEnableAllPins)
 		}
 	}
 
-	LOG(LL_INFO, ("JSAR: set pins - Ok!"));
+	LOG(LL_DEBUG, ("JSAR: set pins - Ok!"));
 
 	for(int i = E1A_MODE; i <= E2B_MODE; i++) {
 		jsi.set8(i, PinMode_ST_INPUT);
