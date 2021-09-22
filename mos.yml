@@ -19,10 +19,10 @@ config_schema:
 
   - ["user.lan.enable", "i", 1, {title: "User Settings: lan enable"}]
   - ["user.can.enable", "i", 0, {title: "User Settings: can enable"}]
-  - ["user.spi.enable", "i", 1, {title: "User Settings: can enable"}]
-  - ["user.irtx.enable", "i", 1, {title: "User Settings: can enable"}]
-  - ["user.irrx.enable", "i", 1, {title: "User Settings: can enable"}]
-  - ["user.sdcard.enable", "i", 1, {title: "User Settings: can enable"}]
+  - ["user.spi.enable", "i", 0, {title: "User Settings: can enable"}]
+  - ["user.irtx.enable", "i", 0, {title: "User Settings: can enable"}]
+  - ["user.irrx.enable", "i", 0, {title: "User Settings: can enable"}]
+  - ["user.sdcard.enable", "i", 0, {title: "User Settings: can enable"}]
 
   - ["debug.level", 2]
   - ["debug.mbedtls_level", 0]
