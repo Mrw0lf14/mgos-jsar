@@ -56,7 +56,7 @@ static const ExpanderPin_t expanderPins[JsAr_D12] = { 		//JsArIO_N] = {
 
 static const ExpanderPin_t *getExpanderPin(uint8_t pin)
 {
-	switch(pin)	{
+	switch (pin) {
 		case 36: return expanderPins + JsAr_A0;
 		case 39: return expanderPins + JsAr_A1;
 		case 34: return expanderPins + JsAr_A2;
@@ -78,7 +78,7 @@ static const ExpanderPin_t *getExpanderPin(uint8_t pin)
 
 uint8_t getExpanderTim(uint8_t pin)
 {
-	switch(pin)	{
+	switch (pin) {
 		case 23: return 2;
 		case 19: return 2;
 		case 18: return 2;
@@ -100,7 +100,7 @@ int JsAr::begin(bool isEnableAllPins)
 {
 	uint8_t pins[] = {18, 23, 21, 19, 22};
 
-	for(uint8_t i = 0; i < sizeof(pins); i++) {
+	for (uint8_t i = 0; i < sizeof(pins); i++) {
 		mgos_gpio_set_mode(pins[i], MGOS_GPIO_MODE_INPUT);
 		mgos_gpio_set_pull(pins[i], MGOS_GPIO_PULL_UP);
 	}
@@ -109,7 +109,7 @@ int JsAr::begin(bool isEnableAllPins)
 	jsi.begin(1000000);
 	id = CONTROLLER_ID;
 
- 	if(unlockBootloader() != DYN_STATUS_OK) {
+ 	if (unlockBootloader() != DYN_STATUS_OK) {
 		LOG(LL_DEBUG, ("JSAR: unlockBootloader FASLE!")); 
 		return 1;
 	}
@@ -118,9 +118,9 @@ int JsAr::begin(bool isEnableAllPins)
 	uint16_t timeout = 500; 
 	do {
 		delay(50);
-	} while(jsi.ping(BOOT_ID) != DYN_STATUS_OK && --timeout);
+	} while (jsi.ping(BOOT_ID) != DYN_STATUS_OK && --timeout);
 
-	if(timeout == 0) { 
+	if (timeout == 0) { 
 		LOG(LL_DEBUG, ("BOOT_ID ping FASLE!")); 
 		return DYN_STATUS_TIMEOUT;
 	}
@@ -132,13 +132,11 @@ int JsAr::begin(bool isEnableAllPins)
 	do {
 		jsi.write(BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)DXL_RESET_MAGIC);
 		delay(300);
-	} while(jsi.ping(id) != DYN_STATUS_OK);
-
-	LOG(LL_DEBUG, ("JSAR: started - Ok!"));
+	} while (jsi.ping(id) != DYN_STATUS_OK);
 
 	delay(500);
 
-	for(uint8_t i = 0; i < sizeof(pins); i++) {
+	for (uint8_t i = 0; i < sizeof(pins); i++) {
 		mgos_gpio_setup_output(pins[i], 1);
 		mgos_gpio_set_mode(pins[i], MGOS_GPIO_MODE_OUTPUT);
 	}
@@ -146,11 +144,9 @@ int JsAr::begin(bool isEnableAllPins)
 	delay(500);
 
 	uint8_t dummy = 0;
-	for(uint8_t i = 0; i < 229; i++) {
+	for (uint8_t i = 0; i < 229; i++) {
 		jsi.get8(i, &dummy);
 	}
-
-	LOG(LL_DEBUG, ("JSAR: dummy - Ok!"));
 
 	jsi.set8(ETHERNET_ENABLE, (uint8_t)1);
 	jsi.set8(ETHERNET_RST, (uint8_t)1);
@@ -158,34 +154,32 @@ int JsAr::begin(bool isEnableAllPins)
 	LOG(LL_DEBUG, ("JSAR: ETHERNET_RST - Ok!"));
 
 	jsi.set8(GPIO_PULL_UP_ENABLE, 1);
-	LOG(LL_DEBUG, ("JSAR: PULL UP - Ok!"));
 
-
-	if(isEnableAllPins) {
+	if (isEnableAllPins) {
 		jsi.set8(MISO_OUTPUT_EN, 1);
 		jsi.set8(D3_D7_PULL_UP_ENABLE, 1);
 		jsi.set8(SPI_MODE, SPI_MODE_5V);
 		jsi.set8(I2C_MODE, I2C_MODE_5V);
 		disableIrTx();
 
-		for(int i = A0_MODE; i <= D11_MODE; i++) {
+		for (uint8_t i = A0_MODE; i <= D11_MODE; i++) {
 			jsi.set8(i, PinMode_ESP);
 		}
 	}
 
-	LOG(LL_DEBUG, ("JSAR: set pins - Ok!"));
 
-	for(int i = E1A_MODE; i <= E2B_MODE; i++) {
+	for (uint8_t i = E1A_MODE; i <= E2B_MODE; i++) {
 		jsi.set8(i, PinMode_ST_INPUT);
 	}
 	
 	delay(100);
 
-	for(uint8_t i = 0; i < sizeof(pins); i++) {
+	for (uint8_t i = 0; i < sizeof(pins); i++) {
 		mgos_gpio_set_mode(pins[i], MGOS_GPIO_MODE_INPUT);
 		mgos_gpio_set_pull(pins[i], MGOS_GPIO_PULL_NONE);
 	}
 
+	LOG(LL_DEBUG, ("JSAR: begin pass"));
 	return 0;
 }
 
@@ -253,9 +247,9 @@ void JsAr::expanderPinMode(uint8_t pin, uint8_t mode)
 {
 	const ExpanderPin_t *xpin = getExpanderPin(pin);
 
-	if(!xpin) return;
+	if (!xpin) return;
 
-	switch(mode) {
+	switch (mode) {
 		case INPUT: 
 			jsi.set8(xpin->mode_reg, PinMode_ST_INPUT); 
 			break;
@@ -271,10 +265,10 @@ void JsAr::expanderPinMode(uint8_t pin, uint8_t mode)
 void JsAr::expanderDigitalWrite(uint8_t pin, uint8_t value)
 {
 	const ExpanderPin_t *xpin = getExpanderPin(pin);
-	if(!xpin) return;
+	if (!xpin) return;
 
 	uint8_t mode = jsi.mRegs[xpin->mode_reg];
-	switch(mode) {
+	switch (mode) {
 		case PinMode_ST_PWM:
 			jsi.set8(xpin->mode_reg, PinMode_ST_OUTPUT);
 			// fall through
@@ -295,11 +289,11 @@ void JsAr::expanderDigitalWrite(uint8_t pin, uint8_t value)
 void JsAr::expanderAnalogWrite(uint8_t pin, uint16_t value)
 {
 	const ExpanderPin_t *xpin = getExpanderPin(pin);
-	if(!xpin) return;
+	if (!xpin) return;
 
 	uint8_t mode = jsi.mRegs[xpin->mode_reg];
 
-	switch(mode) {
+	switch (mode) {
 		case PinMode_ST_OUTPUT:
 			// fall through
 		case PinMode_ST_OUTPUT_OPEN_DRAIN:
@@ -347,13 +341,13 @@ int JsAr::expanderAnalogRead(uint8_t pin)
 	uint16_t data;
 	const ExpanderPin_t *xpin = getExpanderPin(pin);
 
-	if(!xpin) return 0;
+	if (!xpin) return 0;
 
 	uint8_t mode = jsi.mRegs[xpin->mode_reg];
 
-	if(mode < PinMode_ST_ADC) return 0;
+	if (mode < PinMode_ST_ADC) return 0;
 
-	if(mode != PinMode_ST_ADC) {
+	if (mode != PinMode_ST_ADC) {
 		jsi.set8(xpin->mode_reg, PinMode_ST_ADC);
 		delay(1);
 	}
@@ -365,10 +359,10 @@ int JsAr::expanderAnalogRead(uint8_t pin)
 
 void JsAr::timMode(uint8_t tim, uint8_t prescaler, uint16_t pulse)
 {
-	if(tim == 2) {
+	if (tim == 2) {
 		jsi.set8(TIM2_PRESCALER, prescaler);
 		jsi.set16(TIM2_PULSE, pulse);
-	} else if(tim == 3)	{
+	} else if (tim == 3) {
 		jsi.set8(TIM3_PRESCALER, prescaler);
 		jsi.set16(TIM3_PULSE, pulse);
 	}
@@ -378,7 +372,7 @@ void JsAr::replacePinByExpander(uint8_t pin)
 {
 	const ExpanderPin_t *xpin = getExpanderPin(pin);
 
-	if(!xpin) return;
+	if (!xpin) return;
 
 	jsi.set8(xpin->mode_reg, PinMode_ST_INPUT);
 	return;
@@ -414,7 +408,7 @@ int JsAr::updateFirmware()
 	jsi.begin(1000000);
 	unlockBootloader();
 
-	while(jsi.ping(BOOT_ID) != DYN_STATUS_OK) {}
+	while (jsi.ping(BOOT_ID) != DYN_STATUS_OK) {}
 
 	const int BLOCK_SIZE = 128;
 	const int FIRMWARE_CRC_AND_ERASE_CMD_BLOCK_SIZE = 16;
@@ -422,7 +416,7 @@ int JsAr::updateFirmware()
 	
 	//Serial.setTimeout(2000);
 	
-	if(jsi.write(BOOT_ID, 1, firmwareData, 
+	if (jsi.write(BOOT_ID, 1, firmwareData, 
 		FIRMWARE_CRC_AND_ERASE_CMD_BLOCK_SIZE) != DYN_STATUS_OK) {
 		return -1;
 	}
@@ -432,14 +426,14 @@ int JsAr::updateFirmware()
 					- FIRMWARE_CRC_AND_ERASE_CMD_BLOCK_SIZE 
 					+ BLOCK_SIZE - 1) / BLOCK_SIZE;
 	
-	if(fullPacks <= 0) {
+	if (fullPacks <= 0) {
 		return -2;
 	}
 
 	//Serial.println("Writing " + String(fullPacks) + " blocks:");
 	LOG(LL_INFO, ("Writing %d  blocks:", fullPacks));
 
-	for(int i = 0; i < fullPacks; i++) {
+	for (int i = 0; i < fullPacks; i++) {
 		//Serial.print("\t" + String(i));
 		LOG(LL_INFO, ("\t %d:", i));
 		if (!((i + 1) % 16)) {
@@ -453,7 +447,7 @@ int JsAr::updateFirmware()
 			   	firmwareData + FIRMWARE_CRC_AND_ERASE_CMD_BLOCK_SIZE 
 															+ i * BLOCK_SIZE,
 				BLOCK_SIZE);
-		if(jsi.write(BOOT_ID, 0, addr_and_data_block, BLOCK_SIZE + 1)) {
+		if (jsi.write(BOOT_ID, 0, addr_and_data_block, BLOCK_SIZE + 1)) {
 			return -3 - i;
 		}
 		//delay(200);
@@ -464,7 +458,7 @@ int JsAr::updateFirmware()
 
 	// get old application dynamixel id
 	uint8_t app_dxl_id;
-	if(jsi.read(BOOT_ID, ID, app_dxl_id) != DYN_STATUS_OK) {
+	if (jsi.read(BOOT_ID, ID, app_dxl_id) != DYN_STATUS_OK) {
 		return -99;
 	}
 
@@ -474,9 +468,9 @@ int JsAr::updateFirmware()
 
 	delay(1000);
 
-	for(int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		delay(300);
-		if(jsi.ping(CONTROLLER_ID) == DYN_STATUS_OK) {
+		if (jsi.ping(CONTROLLER_ID) == DYN_STATUS_OK) {
 			jsi.write(CONTROLLER_ID, LED, 1);
 			return 0; //Success!
 		}
@@ -487,7 +481,7 @@ int JsAr::updateFirmware()
 
 void JsAr::lockExpander(uint8_t packet_n)
 {
-	if(packet_n == DXL_RESET_MAGIC) {
+	if (packet_n == DXL_RESET_MAGIC) {
 		packet_n++;
 	}
 
@@ -511,7 +505,7 @@ DynamixelStatus JsAr::unlockBootloader()
 	} while(jsi.write(BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)0) != DYN_STATUS_OK  
 			&& --timeout);
 
-	if(timeout != 0) { 
+	if (timeout != 0) { 
 		return DYN_STATUS_OK;
 	} else { 
 		return DYN_STATUS_TIMEOUT;

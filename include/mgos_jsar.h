@@ -1,6 +1,8 @@
 #ifndef MGOS_JSAR_H
 #define MGOS_JSAR_H
 
+#include "DxlMaster.h"
+
 #ifdef __cplusplus
 #include "JsAr.h"
 #include "JsArKeys.h"
