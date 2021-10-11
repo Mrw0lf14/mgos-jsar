@@ -1,7 +1,7 @@
 #ifndef MGOS_JSAR_H
 #define MGOS_JSAR_H
 
-#include "DxlMaster.h"
+#include "mgos_dxlmaster.h"
 
 #ifdef __cplusplus
 #include "JsAr.h"
