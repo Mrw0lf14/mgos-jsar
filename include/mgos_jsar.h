@@ -2,6 +2,7 @@
 #define MGOS_JSAR_H
 
 #include "mgos_dxlmaster.h"
+#include "regs.h"
 
 #ifdef __cplusplus
 #include "JsAr.h"

@@ -147,6 +147,24 @@
 #define I2C_MODE_3V3        (1)
 #define I2C_MODE_5V         (2)
 
+//GPIO FUNCTIONS
+#define INPUT             0x01
+#define OUTPUT            0x02
+#define PULLUP            0x04
+#define INPUT_PULLUP      0x05
+#define PULLDOWN          0x08
+#define INPUT_PULLDOWN    0x09
+#define OPEN_DRAIN        0x10
+#define OUTPUT_OPEN_DRAIN 0x12
+#define SPECIAL           0xF0
+#define FUNCTION_1        0x00
+#define FUNCTION_2        0x20
+#define FUNCTION_3        0x40
+#define FUNCTION_4        0x60
+#define FUNCTION_5        0x80
+#define FUNCTION_6        0xA0
+#define ANALOG            0xC0
+
 typedef enum
 {
 	DRIVER_MODE_DISABLED = 0,

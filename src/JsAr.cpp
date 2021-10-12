@@ -14,10 +14,6 @@
 #define CONTROLLER_ID 		(250)
 #define BOOT_ID 			(251)
 
-#define INPUT 0x00
-#define INPUT_PULLUP 0x02
-#define OUTPUT 0x01
-
 
 typedef enum {
 	JsAr_A0 = 0, JsAr_A1, JsAr_A2, JsAr_A3, JsAr_A4, JsAr_A5, JsAr_D2, JsAr_D3, 
