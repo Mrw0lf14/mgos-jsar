@@ -7,7 +7,7 @@ bool  mgos_mgos_jsar_init(void)
 {
   mgos_gpio_set_mode(LED_PIN, MGOS_GPIO_MODE_OUTPUT);
   
-  /* Begin */
+  /* Begingit  */
   if (mgos_jsar_begin() != 0) {
     LOG(LL_ERROR, ("JsAr begin: FAILED")); 
   } else {
