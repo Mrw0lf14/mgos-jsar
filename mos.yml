@@ -49,7 +49,6 @@ cdefs:
   MGOS_ETH_PHY_LAN87x0: 1
   MGOS_ETH_PHY_DP83848: 0
   
-
 libs:
   - location: https://github.com/mongoose-os-libs/mjs
   - location: https://github.com/mongoose-os-libs/bt-service-debug
