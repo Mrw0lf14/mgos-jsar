@@ -51,9 +51,7 @@ let JsAr = {
 
     writeMinVoltageToStart: ffi('void mgos_jsar_writeMinVoltageToStart(double)'),
     writeMinVoltageToWork: ffi('void mgos_jsar_writeMinVoltageToWork(double)'),
-    readVoltage: function () { 
-        return  ffi('double mgos_jsar_readVoltage(void)'); 
-    },
+    readVoltage:   ffi('double mgos_jsar_readVoltage(void)'),
 
     replacePin36By25AsOUTPUT: ffi('void mgos_jsar_replacePin36By25AsOUTPUT(void)'),
     replacePin36By25AsDAC: ffi('void mgos_jsar_replacePin36By25AsDAC(void)'),
@@ -64,25 +62,15 @@ let JsAr = {
     
     expanderPinMode: ffi('void mgos_jsar_expanderPinMode(int, int)'),
     expanderDigitalWrite: ffi('void mgos_jsar_expanderDigitalWrite(int, int)'),
-    expanderDigitalRead: function () {
-        return ffi('int mgos_jsar_expanderDigitalRead(int)');
-    },
-
+    expanderDigitalRead: ffi('int mgos_jsar_expanderDigitalRead(int)'),
     expanderAnalogWrite: ffi('void mgos_jsar_expanderAnalogWrite(int, int)'),
-
-    expanderAnalogRead: function () {
-        return ffi('int mgos_jsar_expanderAnalogRead(int)'); },
-
+    expanderAnalogRead: ffi('int mgos_jsar_expanderAnalogRead(int)'),
     expanderWriteLed: ffi('void mgos_jsar_expanderWriteLed(int)'),
     timMode: ffi('void mgos_jsar_timMode(int, int, int)'),
 
-    updateFirmware: function () {
-        return ffi('int mgos_jsar_updateFirmware(void)'); },
-
+    updateFirmware: ffi('int mgos_jsar_updateFirmware(void)'),
     lockExpander: ffi('void mgos_jsar_lockExpander(int)'),
-
-    unlockExpander: function () {
-        return ffi('int mgos_jsar_unlockExpander(void)'); }
+    unlockExpander: ffi('int mgos_jsar_unlockExpander(void)')
 
 };
 
@@ -98,15 +86,9 @@ let JsArKeys = {
     powerWrite: ffi('void mgos_jsar_KeysPowerWrite(int, int)'),
     speedWrite: ffi('void mgos_jsar_KeysSpeedWrite(int, int)'),
     
-    powerRead: function() {
-        return ffi('int mgos_jsar_KeysPowerRead(int)');
-    },
-    positionRead: function() {
-        return ffi('int mgos_jsar_KeysPositionRead(int)');
-    },
-    speedRead: function() {
-        return ffi('int mgos_jsar_KeysSpeedRead(int)');
-    },
+    powerRead: ffi('int mgos_jsar_KeysPowerRead(int)'),
+    positionRead: ffi('int mgos_jsar_KeysPositionRead(int)'),
+    speedRead: ffi('int mgos_jsar_KeysSpeedRead(int)'),
 
     digitalWriteAll: ffi('void mgos_jsar_KeysDigitalWriteAll(int, int, int, int)'),
     powerWriteAll: ffi('void mgos_jsar_KeysPowerWriteAll(int, int, int, int)'),
@@ -131,14 +113,9 @@ let JsArMotors = {
     powerWriteAll: ffi('void mgos_jsar_MotorsPowerWriteAll(int, int)'),
     speedWriteAll: ffi('void mgos_jsar_MotorsSpeedWriteAll(int, int)'),
 
-    powerRead: function() {
-        return ffi('int mgos_jsar_MotorsPowerRead(int)'); },
-
-    positionRead: function() {
-        return ffi('int mgos_jsar_MotorsPositionRead(int)'); },
-
-    speedRead: function() {
-        return ffi('int mgos_jsar_MotorsSpeedRead(int)'); },
+    powerRead: ffi('int mgos_jsar_MotorsPowerRead(int)'),
+    positionRead: ffi('int mgos_jsar_MotorsPositionRead(int)'),
+    speedRead: ffi('int mgos_jsar_MotorsSpeedRead(int)'),
 
     positionReadAll: ffi('void mgos_jsar_MotorsPositionReadAll(void *, void *)'),
     speedReadAll: ffi('void mgos_jsar_MotorsSpeedReadAll(void *, void *)'),
