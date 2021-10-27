@@ -1,5 +1,23 @@
 
 let JsAr = {
+    MODE_INPUT: 0x01,
+    MODE_OUTPUT: 0x02,
+    MODE_PULLUP: 0x04,
+    MODE_INPUT_PULLUP: 0x05,
+    MODE_PULLDOWN: 0x08,
+    MODE_INPUT_PULLDOWN: 0x09,
+    MODE_OPEN_DRAIN: 0x10,
+    MODE_OUTPUT_OPEN_DRAIN: 0x12,
+    MODE_SPECIAL: 0xF0,
+    MODE_FUNCTION_1: 0x00,
+    MODE_FUNCTION_2: 0x20,
+    MODE_FUNCTION_3: 0x40,
+    MODE_FUNCTION_4: 0x60,
+    MODE_FUNCTION_5: 0x80,
+    MODE_FUNCTION_6: 0xA0,
+    MODE_ANALOG: 0xC0,
+
+
     begin: ffi('int mgos_jsar_begin(void)'),
 
     enableEthernet: ffi('void mgos_jsar_enableEthernet(void)'),
