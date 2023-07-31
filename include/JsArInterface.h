@@ -2,7 +2,7 @@
 #define __JS_AR_INTERFACE_H
 
 #include "mgos.h"
-#include "DxlMaster.h"
+#include "DxlMaster2.h"
 
 #include "regs.h"
 
