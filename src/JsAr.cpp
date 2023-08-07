@@ -454,7 +454,7 @@ int JsAr::updateFirmware()
 
 	// get old application dynamixel id
 	uint8_t app_dxl_id;
-	if (jsi.read(BOOT_ID, ID, app_dxl_id) != DYN_STATUS_OK) {
+	if (jsi.read(1, BOOT_ID, ID, app_dxl_id) != DYN_STATUS_OK) {
 		return -99;
 	}
 
