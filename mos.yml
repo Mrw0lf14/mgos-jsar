@@ -54,7 +54,7 @@ libs:
   - location: https://github.com/mongoose-os-libs/bt-service-debug
   - location: https://github.com/mongoose-os-libs/ethernet
   - location: https://github.com/mongoose-os-libs/lwip
-  - location: https://github.com/hold3r/mgos-dxlmaster
+  - location: https://github.com/Mrw0lf14/mgos-dxlmaster
 
 
 manifest_version: 2017-09-29
