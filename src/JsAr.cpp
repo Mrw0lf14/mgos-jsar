@@ -114,7 +114,7 @@ int JsAr::begin(bool isEnableAllPins)
 	uint16_t timeout = 500; 
 	do {
 		delay(50);
-	} while (jsi.ping(BOOT_ID) != DYN_STATUS_OK && --timeout);
+	} while (jsi.ping(1, BOOT_ID) != DYN_STATUS_OK && --timeout);
 
 	if (timeout == 0) { 
 		LOG(LL_DEBUG, ("BOOT_ID ping FASLE!")); 
@@ -128,7 +128,7 @@ int JsAr::begin(bool isEnableAllPins)
 	do {
 		jsi.write(1, BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)DXL_RESET_MAGIC);
 		delay(300);
-	} while (jsi.ping(id) != DYN_STATUS_OK);
+	} while (jsi.ping(1, id) != DYN_STATUS_OK);
 
 	delay(500);
 
@@ -404,7 +404,7 @@ int JsAr::updateFirmware()
 	jsi.begin(1000000);
 	unlockBootloader();
 
-	while (jsi.ping(BOOT_ID) != DYN_STATUS_OK) {}
+	while (jsi.ping(1, BOOT_ID) != DYN_STATUS_OK) {}
 
 	const int BLOCK_SIZE = 128;
 	const int FIRMWARE_CRC_AND_ERASE_CMD_BLOCK_SIZE = 16;
@@ -466,7 +466,7 @@ int JsAr::updateFirmware()
 
 	for (int i = 0; i < 10; i++) {
 		delay(300);
-		if (jsi.ping(CONTROLLER_ID) == DYN_STATUS_OK) {
+		if (jsi.ping(1, CONTROLLER_ID) == DYN_STATUS_OK) {
 			jsi.write(1, CONTROLLER_ID, LED, 1);
 			return 0; //Success!
 		}
