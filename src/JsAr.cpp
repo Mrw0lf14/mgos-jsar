@@ -126,7 +126,7 @@ int JsAr::begin(bool isEnableAllPins)
 	delay(100);
 
 	do {
-		jsi.write(BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)DXL_RESET_MAGIC);
+		jsi.write(1, BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)DXL_RESET_MAGIC);
 		delay(300);
 	} while (jsi.ping(id) != DYN_STATUS_OK);
 
@@ -412,7 +412,7 @@ int JsAr::updateFirmware()
 	
 	//Serial.setTimeout(2000);
 	
-	if (jsi.write(BOOT_ID, 1, firmwareData, 
+	if (jsi.write(1, BOOT_ID, 1, firmwareData, 
 		FIRMWARE_CRC_AND_ERASE_CMD_BLOCK_SIZE) != DYN_STATUS_OK) {
 		return -1;
 	}
@@ -443,7 +443,7 @@ int JsAr::updateFirmware()
 			   	firmwareData + FIRMWARE_CRC_AND_ERASE_CMD_BLOCK_SIZE 
 															+ i * BLOCK_SIZE,
 				BLOCK_SIZE);
-		if (jsi.write(BOOT_ID, 0, addr_and_data_block, BLOCK_SIZE + 1)) {
+		if (jsi.write(1, BOOT_ID, 0, addr_and_data_block, BLOCK_SIZE + 1)) {
 			return -3 - i;
 		}
 		//delay(200);
@@ -460,14 +460,14 @@ int JsAr::updateFirmware()
 
 	delay(1000);
 
-	jsi.write(BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)DXL_RESET_MAGIC);
+	jsi.write(1, BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)DXL_RESET_MAGIC);
 
 	delay(1000);
 
 	for (int i = 0; i < 10; i++) {
 		delay(300);
 		if (jsi.ping(CONTROLLER_ID) == DYN_STATUS_OK) {
-			jsi.write(CONTROLLER_ID, LED, 1);
+			jsi.write(1, CONTROLLER_ID, LED, 1);
 			return 0; //Success!
 		}
 	}
@@ -481,9 +481,9 @@ void JsAr::lockExpander(uint8_t packet_n)
 		packet_n++;
 	}
 
-	jsi.write(id, DXL_LOCK_RESET_REG, (uint8_t)packet_n);
-	jsi.write(id, DXL_LOCK_RESET_REG, (uint8_t)packet_n);
-	jsi.write(id, DXL_LOCK_RESET_REG, (uint8_t)packet_n);
+	jsi.write(1, id, DXL_LOCK_RESET_REG, (uint8_t)packet_n);
+	jsi.write(1, id, DXL_LOCK_RESET_REG, (uint8_t)packet_n);
+	jsi.write(1, id, DXL_LOCK_RESET_REG, (uint8_t)packet_n);
 }
 
 DynamixelStatus JsAr::unlockExpander()
@@ -498,7 +498,7 @@ DynamixelStatus JsAr::unlockBootloader()
 	/* We must sent 10 times for unlock */
 	do {
 		delay(1);
-	} while(jsi.write(BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)0) != DYN_STATUS_OK  
+	} while(jsi.write(1, BOOT_ID, DXL_LOCK_RESET_REG, (uint8_t)0) != DYN_STATUS_OK  
 			&& --timeout);
 
 	if (timeout != 0) { 
