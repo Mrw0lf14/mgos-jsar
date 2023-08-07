@@ -9,7 +9,7 @@ JsArInterface jsi(UART0);
 DynamixelStatus JsArInterface::set8(uint8_t addr, uint8_t val)
 {
 	uint8_t status;
-	status = write(mId, addr, val);
+	status = write(1, mId, addr, val);
 
 	if(status == DYN_STATUS_OK) {
 		mRegs[addr] = val;
@@ -21,7 +21,7 @@ DynamixelStatus JsArInterface::set8(uint8_t addr, uint8_t val)
 DynamixelStatus JsArInterface::set16(uint8_t addr, uint16_t val)
 {
 	uint8_t status;
-	status = write(mId, addr, val);
+	status = write(1, mId, addr, val);
 
 	if(status == DYN_STATUS_OK) {
 		mRegs[addr] = val;
@@ -35,7 +35,7 @@ DynamixelStatus JsArInterface::get8(uint8_t addr, uint8_t *data)
 {
 	if(data == nullptr) return DYN_STATUS_SOFT_ERROR;
 
-	uint8_t status = read(mId, addr, *data);
+	uint8_t status = read(1, mId, addr, *data);
 
 	if(status == DYN_STATUS_OK) {
 		mRegs[addr] = *data;
@@ -48,7 +48,7 @@ DynamixelStatus JsArInterface::get16(uint8_t addr, uint16_t *data)
 {
 	if (data == nullptr) return DYN_STATUS_SOFT_ERROR;
 
-	uint8_t status = read(mId, addr, *data);
+	uint8_t status = read(1, mId, addr, *data);
 
 	if (status == DYN_STATUS_OK) {
 		mRegs[addr] = *data & 0xFF;
@@ -62,7 +62,7 @@ uint8_t JsArInterface::set(uint8_t addr, uint8_t size, uint8_t *data)
 {
 	if (data == nullptr) return DYN_STATUS_SOFT_ERROR;
 	
-	uint8_t status = write(mId,  addr, size, data);
+	uint8_t status = write(1, mId,  addr, size, data);
 
 	if (status == DYN_STATUS_OK) {
 		memcpy(mRegs +  addr, data, size);
@@ -75,7 +75,7 @@ uint8_t JsArInterface::get(uint8_t addr, uint8_t size, uint8_t* data)
 {
 	if (data == nullptr) return DYN_STATUS_SOFT_ERROR;
 
-	uint8_t status = read(mId, addr, size, data);
+	uint8_t status = read(1, mId, addr, size, data);
 
 	if (status == DYN_STATUS_OK) {
 		memcpy(mRegs +  addr, data, size);
